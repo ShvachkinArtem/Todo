@@ -1,13 +1,113 @@
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  margin: auto;
+  width: 800px;
+  font-family: "Smooch Sans", sans-serif;
+  font-size: 30px;
+  font-weight: 600;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+* {
+  font-family: "Smooch Sans", sans-serif;
+}
+
+button {
+  cursor: pointer;
+}
+
+.buttons input {
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttons {
+  display: flex;
+  margin: 10px;
+  height: 30px;
+}
+
+.options {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.header {
+  text-align: center;
+}
+
+.dowhat {
+  display: flex;
+  justify-content: center;
+  margin: auto;
+}
+
+.tasks {
+  border: 1px solid black;
+}
+
+.wanttodo {
+  width: 60%;
+}
+
+.check {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sortbydate {
+  display: flex;
+  align-items: center;
+}
+
+.arrowdown {
+  transform: rotate(180deg);
+}
+
+.filter-button {
+  outline: none;
+  font-size: 30px;
+  height: fit-content;
+  margin-right: 3px;
+}
+
+.filter-button:last-child {
+  margin-right: 0px;
+}
+
+.delete {
+  display: flex;
+  align-items: center;
+}
+
+.pagination-button {
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.wanttodo {
+  font-weight: 600;
+  font-size: 30px;
+}
+
+.delete-todo {
+  border: none;
+  background: inherit;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+.trashcan:hover {
+  fill: red;
+  transition: 0.5s;
+}
+
+.todoTasks {
+  display: flex;
+  justify-content: space-between;
+}
+
+.arrows {
+  display: flex;
 }
