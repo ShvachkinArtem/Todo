@@ -1,34 +1,33 @@
 import './App.css';
 import ToDoList from './tasks';
-import {useState} from "react"
+import { useState } from "react"
 
 const App = () => {
   const [todos, setTodos] = useState([
-    { id: -1, completed: false, title: "Do something" }
+    { id: -1, completed: false, title: "Do something", createdAt:new Date().toLocaleString() }
   ])
-  const [newTitle,setTitle] = useState("") 
-  function addTodo(){
-    setTodos(prev=>[...prev,{ id: newId, completed: false, title: newTitle }])
-    // setTodos([...todos,{ id: 2, completed: false, title: "Do something 2222222" }])
+  const [newTitle, setTitle] = useState("")
+  function addTodo() {
+    setTodos(prev => [...prev, { id: newId, completed: false, title: newTitle ,createdAt:new Date().toLocaleString() }])
   }
-  const [newId,setId] = useState(0)
- 
+  const [newId, setId] = useState(0)
   const toggleTodo = (id) => {
     console.log("to do id", id)
   }
- const handleChange = (ev) => {
-   setTitle(ev.target.value)
- }
-const handleButton = (event) => {
-  if(event.key==="Enter"){
-    addTodo(); setTitle("");
-    setId(newId+1);console.log(newId)
+  const handleChange = ({ target }) => {
+    setTitle(target.value)
   }
-  
-}
-const deleteTask = (id) => {
-  setTodos([...todos].filter(todos=>todos.id!=id))
+  const handleButton = ({ key }) => {
+    if (key === "Enter") {
+      addTodo();
+      setTitle("");
+      setId(newId + 1); console.log(newId)
     }
+
+  }
+  const deleteTask = (id) => {
+    setTodos(prev => prev.filter(todos => todos.id != id))
+  }
 
   return (
     <div>
@@ -36,7 +35,7 @@ const deleteTask = (id) => {
         ToDo
       </h1>
       <div className="dowhat">
-        <input value={newTitle} onChange={ev => handleChange(ev)}  onKeyDown={e => handleButton(e)} className="wanttodo" type="text" placeholder="I want to do..." />
+        <input value={newTitle} onChange={handleChange} onKeyDown={handleButton} className="wanttodo" type="text" placeholder="I want to do..." />
       </div>
       <div className="options">
         <div className="buttons">
@@ -73,30 +72,8 @@ const deleteTask = (id) => {
 
       <ToDoList todos={todos} onToggle={toggleTodo} deleteTask={deleteTask}></ToDoList>
 
-      {
-    /* <div className="tasks">
-        <div className="check">
-            <input type="checkbox" onChange={() => console.log()} />
-            <p>Do something</p>
-        </div>
-        <div className="delete">
-            <p>1.03.2022</p>
-            <button className="delete-todo">
-                <svg className="trashcan" width="32px" height="32px" viewBox="0 0 32 32" id="icon" xmlns="http://www.w3.org/2000/svg" >
-                    <defs>
-                        
-                    </defs>
-                    <title>trash-can</title>
-                    <rect x="12" y="12" width="2" height="12" />
-                    <rect x="18" y="12" width="2" height="12" />
-                    <path d="M4,6V8H6V28a2,2,0,0,0,2,2H24a2,2,0,0,0,2-2V8h2V6ZM8,28V8H24V28Z" />
-                    <rect x="12" y="2" width="8" height="2" />
-                    <rect style={{fill:'none'}} id="_Transparent_Rectangle_" data-name="&lt;Transparent Rectangle&gt;" class="cls-1"
-                        width="32" height="32" />
-                </svg>
-            </button>
-        </div>
-    </div> */}
+      
+ 
       <div className="pagination-wrapper">
         <button className="pagination-button">{"<<"}</button>
         <button className="pagination-button">1</button>
