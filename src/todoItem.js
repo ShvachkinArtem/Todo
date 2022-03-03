@@ -1,13 +1,13 @@
-export default function TodoItem(props) {
+export default function TodoItem({onChange,todos, deleteTask}) {
     return (
         <div className="todoTasks">
             <div className="check">
-                <input type="checkbox" onChange={() => props.onChange(props.todos.id)} />
-                <p>{props.todos.title}</p>
+                <input type="checkbox" onChange={() => onChange(todos.id)} />
+                <p>{todos.title}</p>
             </div>
             <div className="delete">
-                <p>1.03.2022</p>
-                <button className="delete-todo" onClick={()=>props.deleteTask(props.todos.id)}>
+                <p>{todos.createdAt}</p>
+                <button className="delete-todo" onClick={()=>deleteTask(todos.id)}>
                     <svg className="trashcan" width="32px" height="32px" viewBox="0 0 32 32" id="icon" xmlns="http://www.w3.org/2000/svg" >
                         <defs>
                         </defs>

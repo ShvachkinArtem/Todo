@@ -1,34 +1,33 @@
 import './App.css';
 import ToDoList from './tasks';
-import {useState} from "react"
+import { useState } from "react"
 
 const App = () => {
   const [todos, setTodos] = useState([
-    { id: -1, completed: false, title: "Do something" }
+    { id: -1, completed: false, title: "Do something", createdAt:new Date().toLocaleString() }
   ])
-  const [newTitle,setTitle] = useState("") 
-  function addTodo(){
-    setTodos(prev=>[...prev,{ id: newId, completed: false, title: newTitle }])
-    // setTodos([...todos,{ id: 2, completed: false, title: "Do something 2222222" }])
+  const [newTitle, setTitle] = useState("")
+  function addTodo() {
+    setTodos(prev => [...prev, { id: newId, completed: false, title: newTitle ,createdAt:new Date().toLocaleString() }])
   }
-  const [newId,setId] = useState(0)
- 
+  const [newId, setId] = useState(0)
   const toggleTodo = (id) => {
     console.log("to do id", id)
   }
- const handleChange = (ev) => {
-   setTitle(ev.target.value)
- }
-const handleButton = (event) => {
-  if(event.key==="Enter"){
-    addTodo(); setTitle("");
-    setId(newId+1);console.log(newId)
+  const handleChange = ({ target }) => {
+    setTitle(target.value)
   }
-  
-}
-const deleteTask = (id) => {
-  setTodos([...todos].filter(todos=>todos.id!=id))
+  const handleButton = ({ key }) => {
+    if (key === "Enter") {
+      addTodo();
+      setTitle("");
+      setId(newId + 1); console.log(newId)
     }
+
+  }
+  const deleteTask = (id) => {
+    setTodos(prev => prev.filter(todos => todos.id != id))
+  }
 
   return (
     <div>
@@ -36,7 +35,7 @@ const deleteTask = (id) => {
         ToDo
       </h1>
       <div className="dowhat">
-        <input value={newTitle} onChange={ev => handleChange(ev)}  onKeyDown={e => handleButton(e)} className="wanttodo" type="text" placeholder="I want to do..." />
+        <input value={newTitle} onChange={handleChange} onKeyDown={handleButton} className="wanttodo" type="text" placeholder="I want to do..." />
       </div>
       <div className="options">
         <div className="buttons">
