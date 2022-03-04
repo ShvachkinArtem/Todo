@@ -1,5 +1,6 @@
 import { useState } from "react"
 
+
 export default function TodoItem({ onChange, todos, deleteTask, setTodos }) {
 
     const [editTask, setTask] = useState(todos.title);
@@ -11,12 +12,12 @@ export default function TodoItem({ onChange, todos, deleteTask, setTodos }) {
             setStatus(false)
         }
     }
-    const taskelement = editStatus ? <input className={editTask.length === 0 ? "trumbleA" : ""} value={editTask} onChange={e => setTask(e.target.value)} onKeyDown={handleTask}></input> : <p onClick={() => setStatus(true)}>{todos.title} </p>
+    const taskelement = editStatus ? <input maxLength={33} className={editTask.length === 0 ? "trumbleA" : ""} value={editTask} onChange={e => setTask(e.target.value)} onKeyDown={handleTask}></input> : <p onClick={() => setStatus(true)}>{todos.title} </p>
 
     return (
         <div className="todoTasks">
             <div className="check">
-                <input type="checkbox" onChange={() => onChange(todos.id)} />
+                <input type="checkbox" value={todos.status} onChange={({ target }) => onChange(todos.id, target.checked)} />
                 {taskelement}
             </div>
             <div className="delete">

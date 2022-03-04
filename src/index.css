@@ -128,3 +128,8 @@ button {
       transform: rotate(10deg);
   }
 }
+.filter-button:hover {
+  background-color: #ccffff;
+}.pagination-button:hover {
+  background-color: #ccffff;
+}
