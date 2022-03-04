@@ -4,7 +4,7 @@ export default function ToDoList(props) {
         <div className="tasks">
             {
 
-                props.todos.map((todos, index) => <TodoItem key={index} todos={todos} index={index} onChange={props.onToggle} deleteTask={props.deleteTask}></TodoItem>)
+                props.todos.map((todos, index) => <TodoItem key={index} todos={todos} index={index} onChange={props.onToggle} deleteTask={props.deleteTask} setTodos={props.changeTitle}></TodoItem>)
             }
         </div>
 

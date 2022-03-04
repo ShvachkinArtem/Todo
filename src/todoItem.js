@@ -1,12 +1,26 @@
-export default function TodoItem({ onChange, todos, deleteTask }) {
+import { useState } from "react"
+
+export default function TodoItem({ onChange, todos, deleteTask, setTodos }) {
+
+    const [editTask, setTask] = useState(todos.title);
+    const [editStatus, setStatus] = useState(false);
+    const handleTask = ({ key }) => {
+        if (key === "Enter") {
+            if (editTask.trim().length === 0) { return };
+            setTodos(todos.id, editTask);
+            setStatus(false)
+        }
+    }
+    const taskelement = editStatus ? <input className={editTask.length === 0 ? "trumbleA" : ""} value={editTask} onChange={e => setTask(e.target.value)} onKeyDown={handleTask}></input> : <p onClick={() => setStatus(true)}>{todos.title} </p>
+
     return (
         <div className="todoTasks">
             <div className="check">
                 <input type="checkbox" onChange={() => onChange(todos.id)} />
-                <p>{todos.title}</p>
+                {taskelement}
             </div>
             <div className="delete">
-                <p>{todos.createdAt}</p>
+                <p>{new Date(todos.createdAt).toLocaleString()}</p>
                 <button className="delete-todo" onClick={() => deleteTask(todos.id)}>
                     <svg className="trashcan" width="32px" height="32px" viewBox="0 0 32 32" id="icon" xmlns="http://www.w3.org/2000/svg" >
                         <defs>
