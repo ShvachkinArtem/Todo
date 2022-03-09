@@ -1,12 +1,13 @@
 import TodoItem from "./todoItem"
-export default function ToDoList(props) {
-    return (
-        <div className="tasks">
-            {
+const ToDoList = ({ todos, onToggle, deleteTask, changeTitle }) =>
+(
+    <div className="tasks">
+        {
 
-                props.todos.map((todos, index) => <TodoItem key={index} todos={todos} index={index} onChange={props.onToggle} deleteTask={props.deleteTask} setTodos={props.changeTitle}></TodoItem>)
-            }
-        </div>
+            todos.map((todos, index) => <TodoItem key={index} todos={todos} index={index} onChange={onToggle} deleteTask={deleteTask} setTodos={changeTitle}></TodoItem>)
+        }
+    </div>
 
-    )
-}
+)
+
+export default ToDoList

@@ -1,15 +1,37 @@
 
 import ToDoList from './tasks';
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 const App = () => {
-  const [todos, setTodos] = useState([
-
-  ])
+  const [todos, setTodos] = useState([])
+  const [filterSort, setFilter] = useState([])
   const [newTitle, setTitle] = useState("")
-  function addTodo() {
+
+  const [filter, setnewFilter] = useState('ALL');
+
+  const addTodo = () => {
     setTodos(prev => [...prev, { id: newId, status: false, title: newTitle, createdAt: new Date().getTime() }])
   }
+
+  useEffect(() => {
+    if (filter === 'ALL') {
+      setFilter([...todos]);
+      return;
+    }
+
+    if (filter === 'DONE') {
+      setFilter([...todos].filter(todos => todos.status === true))
+      return;
+    }
+
+
+    if (filter === 'UNDONE') {
+      setFilter([...todos].filter(todos => todos.status === false))
+      return;
+    }
+
+  }, [filter, todos])
+
   const [newId, setId] = useState(0)
   const toggleTodo = (id, newStatus) => {
     setTodos(prev => prev.map(el => {
@@ -35,7 +57,7 @@ const App = () => {
 
   }
   const statusCheck = (status) => {
-    setTodos(prev => [...prev].filter(todos => todos.status === status))
+    setFilter([...todos].filter(todos => todos.status === status))
   }
   const changeTitle = (id, nextTitle) => {
     const index = todos.findIndex(todo => todo.id === id);
@@ -68,9 +90,9 @@ const App = () => {
       </div>
       <div className="options">
         <div className="buttons">
-          <button className="filter-button">All</button>
-          <button onClick={() => statusCheck(true)} className="filter-button">Done  </button>
-          <button onClick={() => statusCheck(false)} className="filter-button">Undone  </button>
+          <button onClick={() => setnewFilter('ALL')} className="filter-button" >All</button>
+          <button onClick={() => setnewFilter('DONE')} className="filter-button">Done  </button>
+          <button onClick={() => setnewFilter('UNDONE')} className="filter-button">Undone  </button>
         </div>
         <div className="sortbydate">
           <p style={{ marginRight: "5px" }}>Sort by date</p>
@@ -99,7 +121,7 @@ const App = () => {
       </div>
 
 
-      <ToDoList todos={todos} onToggle={toggleTodo} deleteTask={deleteTask} changeTitle={changeTitle} statusCheck={statusCheck}></ToDoList>
+      <ToDoList todos={filterSort} onToggle={toggleTodo} deleteTask={deleteTask} changeTitle={changeTitle} setFilter={setnewFilter}></ToDoList>
 
 
 

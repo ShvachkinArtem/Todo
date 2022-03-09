@@ -1,7 +1,7 @@
 import { useState } from "react"
 
 
-export default function TodoItem({ onChange, todos, deleteTask, setTodos }) {
+ const TodoItem = ({ onChange, todos, deleteTask, setTodos }) => {
 
     const [editTask, setTask] = useState(todos.title);
     const [editStatus, setStatus] = useState(false);
@@ -17,7 +17,7 @@ export default function TodoItem({ onChange, todos, deleteTask, setTodos }) {
     return (
         <div className="todoTasks">
             <div className="check">
-                <input type="checkbox" value={todos.status} onChange={({ target }) => onChange(todos.id, target.checked)} />
+                <input type="checkbox" value={todos.status} onChange={({ target }) => onChange(todos.id, target.checked)} checked={todos.status} />
                 {taskelement}
             </div>
             <div className="delete">
@@ -39,3 +39,4 @@ export default function TodoItem({ onChange, todos, deleteTask, setTodos }) {
         </div>
     )
 }
+export default TodoItem
