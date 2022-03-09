@@ -10,13 +10,15 @@ const App = () => {
   const [newTitle, setTitle] = useState("")
   const [newPage, setPage] = useState(0)
   const [filter, setnewFilter] = useState('ALL');
-
+const [time,setbyTime] = useState('asc')
   const addTodo = () => {
     setTodos(prev => [...prev, { uuid: newId, done: false, name: newTitle, createdAt: new Date().getTime() }])
   }
 
   const updateTodos = () => {
-    axios.get(`${baseURL}/tasks/1`).then((response) => {
+    axios.get(`${baseURL}/tasks/1`,{params:{
+      order:time
+    }}).then((response) => {
       console.log(response)
       setTodos(response.data.tasks)
     })
@@ -25,6 +27,11 @@ const App = () => {
   useEffect(() => {
     updateTodos();
   }, []);
+
+  useEffect(() => {
+    updateTodos();
+  }, [time]);
+
   useEffect(() => {
     setCount(todos.length);
 
@@ -51,7 +58,7 @@ const App = () => {
       return;
     }
 
-  }, [filter, todos, newPage]) 
+  }, [filter, todos, newPage , time]) 
   // const deleteTodo = (uuid) => {
   //   axios.delete(`${baseURL}/task/1/${uuid}`).then((response) => updateTodos())
   // };
@@ -88,7 +95,7 @@ const App = () => {
         }
       });
 
-      //addTodo();
+      
       setTitle("");
       setId(newId + 1); console.log(newId)
     }
@@ -108,15 +115,7 @@ const App = () => {
     setTodos(prev => prev.filter(todos => todos.uuid !== uuid))
   }
   const sortbydate = (up) => {
-    if (up) {
-      setTodos([...todos].sort(function (a, b) {
-        return a.createdAt - b.createdAt;
-      }))
-      return
-    }
-    setTodos([...todos].sort(function (a, b) {
-      return b.createdAt - a.createdAt;
-    }))
+setbyTime(up)
   }
 
   const countPages = Math.ceil(count / 5);
@@ -150,7 +149,7 @@ const App = () => {
           <p style={{ marginRight: "5px" }}>Sort by date</p>
           <div className="arrows">
             <button >
-              <div onClick={() => sortbydate(true)} className="arrowup">
+              <div onClick={() => sortbydate('asc')} className="arrowup">
                 <svg width="20px" height="20px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
                   <path
                     d="M8.2 751.4c0 8.6 3.4 17.401 10 24.001 13.2 13.2 34.8 13.2 48 0l451.8-451.8 445.2 445.2c13.2 13.2 34.8 13.2 48 0s13.2-34.8 0-48L542 251.401c-13.2-13.2-34.8-13.2-48 0l-475.8 475.8c-6.8 6.8-10 15.4-10 24.2z" />
@@ -159,7 +158,7 @@ const App = () => {
               </div>
             </button>
             <button>
-              <div onClick={() => sortbydate(false)} className="arrowdown">
+              <div onClick={() => sortbydate('desc')} className="arrowdown">
                 <svg width="20px" height="20px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
                   <path
                     d="M8.2 751.4c0 8.6 3.4 17.401 10 24.001 13.2 13.2 34.8 13.2 48 0l451.8-451.8 445.2 445.2c13.2 13.2 34.8 13.2 48 0s13.2-34.8 0-48L542 251.401c-13.2-13.2-34.8-13.2-48 0l-475.8 475.8c-6.8 6.8-10 15.4-10 24.2z" />
