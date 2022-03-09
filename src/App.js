@@ -4,9 +4,10 @@ import { useEffect, useState } from "react"
 
 const App = () => {
   const [todos, setTodos] = useState([])
+  const [count, setCount] = useState([])
   const [filterSort, setFilter] = useState([])
   const [newTitle, setTitle] = useState("")
-
+  const [newPage, setPage] = useState(0)
   const [filter, setnewFilter] = useState('ALL');
 
   const addTodo = () => {
@@ -14,23 +15,32 @@ const App = () => {
   }
 
   useEffect(() => {
+    setCount(todos.length);
+
+    const sliceTodos = ([...todos].slice(5 * newPage, 5 * newPage + 5))
+
+    if(newPage>0 && sliceTodos.length === 0){
+      setPage(prev => prev-1)
+      return
+    }
+
     if (filter === 'ALL') {
-      setFilter([...todos]);
+      setFilter([...sliceTodos]);
       return;
     }
 
     if (filter === 'DONE') {
-      setFilter([...todos].filter(todos => todos.status === true))
+      setFilter([...sliceTodos].filter(todos => todos.status === true))
       return;
     }
 
 
     if (filter === 'UNDONE') {
-      setFilter([...todos].filter(todos => todos.status === false))
+      setFilter([...sliceTodos].filter(todos => todos.status === false))
       return;
     }
 
-  }, [filter, todos])
+  }, [filter, todos, newPage])
 
   const [newId, setId] = useState(0)
   const toggleTodo = (id, newStatus) => {
@@ -80,6 +90,19 @@ const App = () => {
     }))
   }
 
+  const countPages = Math.ceil(count/5);
+
+  const paginationButtons = [] 
+  for(let i = 0 ;i<countPages;i++) {
+    paginationButtons.push(<button onClick={() => setPage(i)} className="pagination-button">{i+1}</button>)
+  }
+
+  const pagination = count > 5 ? (<div className="pagination-wrapper">
+    <button className="pagination-button" onClick={() => setPage(0)}> {"<<"}</button>
+    {paginationButtons}
+    <button className="pagination-button" onClick={() => setPage(countPages - 1)}>{">>"}</button>
+  </div>) : <></>
+
   return (
     <div>
       <h1 className="header">
@@ -125,15 +148,8 @@ const App = () => {
 
 
 
-      <div className="pagination-wrapper">
-        <button className="pagination-button">{"<<"}</button>
-        <button className="pagination-button">1</button>
-        <button className="pagination-button">2</button>
-        <button className="pagination-button">3</button>
-        <button className="pagination-button">4</button>
-        <button className="pagination-button">5</button>
-        <button className="pagination-button">{">>"}</button>
-      </div>
+{pagination}
+
     </div>
   );
 }
