@@ -52,7 +52,9 @@ const App = () => {
     }
 
   }, [filter, todos, newPage]) 
-
+  // const deleteTodo = (uuid) => {
+  //   axios.delete(`${baseURL}/task/1/${uuid}`).then((response) => updateTodos())
+  // };
   const [newId, setId] = useState(0)
   const toggleTodo = (uuid, newStatus) => {
     setTodos(prev => prev.map(el => {
@@ -72,7 +74,19 @@ const App = () => {
     if (key === "Enter") {
       if (newTitle.trim().length === 0) { return };
 
-      axios.post(`${baseURL}/task/1`, {done: false, name: newTitle}).then((response) => updateTodos());
+      axios.post(`${baseURL}/task/1`, {done: false, name: newTitle}).then((response) => {
+        
+
+        
+        updateTodos()
+      })        .catch(function (error) {
+        if (error.response) {
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+          alert(error.response.data.message)
+        }
+      });
 
       //addTodo();
       setTitle("");
@@ -90,6 +104,7 @@ const App = () => {
     setTodos(newTodos)
   }
   const deleteTask = (uuid) => {
+    axios.delete(`${baseURL}/task/1/${uuid}`).then((response) => updateTodos())
     setTodos(prev => prev.filter(todos => todos.uuid !== uuid))
   }
   const sortbydate = (up) => {
