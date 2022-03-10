@@ -25,6 +25,7 @@ const App = () => {
     }).then((response) => {
       console.log(response)
       setTodos(response.data.tasks)
+      setCount(response.data.count);
     })
   }
 
@@ -34,33 +35,14 @@ const App = () => {
 
   useEffect(() => {
     updateTodos();
-  }, [time]);
+  }, [time,newPage]);
 
   useEffect(() => {
-    setCount(todos.length);
+    
     setFilter(todos)
     const sliceTodos = ([...todos].slice(5 * newPage, 5 * newPage + 5))
 
-    // if (newPage > 1 && sliceTodos.length === 0) {
-    //   setPage(prev => prev - 1)
-    //   return
-    // }
-
-    // if (filter === 'ALL') {
-    //   setFilter([...sliceTodos]);
-    //   return;
-    // }
-
-    // if (filter === 'DONE') {
-    //   setFilter([...sliceTodos].filter(todos => todos.done === true))
-    //   return;
-    // }
-
-
-    // if (filter === 'UNDONE') {
-    //   setFilter([...sliceTodos].filter(todos => todos.done === false))
-    //   return;
-    // }
+    
 
   }, [filter, todos, newPage, time])
   
@@ -105,23 +87,20 @@ const App = () => {
   }
   
   const changeTitle = (uuid, nextTitle) => {
-    // const index = todos.findIndex(todo => todo.uuid === uuid);
-    // const newTodos = [...todos];
-    // newTodos[index].name = nextTitle;
-    // newTodos()
+    
     axios.patch(`${baseURL}/task/1/${uuid}`, {
       name:nextTitle
     }).then((response) => updateTodos())
   }
   const deleteTask = (uuid) => {
     axios.delete(`${baseURL}/task/1/${uuid}`).then((response) => updateTodos())
-    // setTodos(prev => prev.filter(todos => todos.uuid !== uuid))
+    
   }
   const editTask = (uuid) => {
     axios.patch(`${baseURL}/task/1/${uuid}`, {
       name:newTitle
     }).then((response) => updateTodos())
-    // setTodos(prev => prev.filter(todos => todos.uuid !== uuid))
+    
   }
   const sortbydate = (up) => {
     setbyTime(up)
