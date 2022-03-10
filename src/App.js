@@ -2,23 +2,27 @@
 import ToDoList from './tasks';
 import { useEffect, useState } from "react"
 import axios from 'axios';
+import Pagination from './pagination';
+const AMOUNT = 5
+
 const baseURL = "https://todo-api-learning.herokuapp.com/v1"
 const App = () => {
   const [todos, setTodos] = useState([])
   const [count, setCount] = useState([])
   const [filterSort, setFilter] = useState([])
   const [newTitle, setTitle] = useState("")
-  const [newPage, setPage] = useState(0)
+  const [newPage, setPage] = useState(1)
   const [filter, setnewFilter] = useState('ALL');
-const [time,setbyTime] = useState('asc')
-  const addTodo = () => {
-    setTodos(prev => [...prev, { uuid: newId, done: false, name: newTitle, createdAt: new Date().getTime() }])
-  }
+  const [time, setbyTime] = useState('asc')
+  
 
   const updateTodos = () => {
-    axios.get(`${baseURL}/tasks/1`,{params:{
-      order:time
-    }}).then((response) => {
+    axios.get(`${baseURL}/tasks/1`, {
+      params: {
+        order: time,
+        page:newPage
+      }
+    }).then((response) => {
       console.log(response)
       setTodos(response.data.tasks)
     })
@@ -34,34 +38,32 @@ const [time,setbyTime] = useState('asc')
 
   useEffect(() => {
     setCount(todos.length);
-
+    setFilter(todos)
     const sliceTodos = ([...todos].slice(5 * newPage, 5 * newPage + 5))
 
-    if (newPage > 0 && sliceTodos.length === 0) {
-      setPage(prev => prev - 1)
-      return
-    }
+    // if (newPage > 1 && sliceTodos.length === 0) {
+    //   setPage(prev => prev - 1)
+    //   return
+    // }
 
-    if (filter === 'ALL') {
-      setFilter([...sliceTodos]);
-      return;
-    }
+    // if (filter === 'ALL') {
+    //   setFilter([...sliceTodos]);
+    //   return;
+    // }
 
-    if (filter === 'DONE') {
-      setFilter([...sliceTodos].filter(todos => todos.done === true))
-      return;
-    }
+    // if (filter === 'DONE') {
+    //   setFilter([...sliceTodos].filter(todos => todos.done === true))
+    //   return;
+    // }
 
 
-    if (filter === 'UNDONE') {
-      setFilter([...sliceTodos].filter(todos => todos.done === false))
-      return;
-    }
+    // if (filter === 'UNDONE') {
+    //   setFilter([...sliceTodos].filter(todos => todos.done === false))
+    //   return;
+    // }
 
-  }, [filter, todos, newPage , time]) 
-  // const deleteTodo = (uuid) => {
-  //   axios.delete(`${baseURL}/task/1/${uuid}`).then((response) => updateTodos())
-  // };
+  }, [filter, todos, newPage, time])
+  
   const [newId, setId] = useState(0)
   const toggleTodo = (uuid, newStatus) => {
     setTodos(prev => prev.map(el => {
@@ -81,12 +83,12 @@ const [time,setbyTime] = useState('asc')
     if (key === "Enter") {
       if (newTitle.trim().length === 0) { return };
 
-      axios.post(`${baseURL}/task/1`, {done: false, name: newTitle}).then((response) => {
-        
+      axios.post(`${baseURL}/task/1`, { done: false, name: newTitle }).then((response) => {
 
-        
+
+
         updateTodos()
-      })        .catch(function (error) {
+      }).catch(function (error) {
         if (error.response) {
           console.log(error.response.data);
           console.log(error.response.status);
@@ -95,41 +97,38 @@ const [time,setbyTime] = useState('asc')
         }
       });
 
-      
+
       setTitle("");
       setId(newId + 1); console.log(newId)
     }
 
   }
-  // const statusCheck = (done) => {
-  //   setFilter([...todos].filter(todos => todos.done === done))
-  // }
+  
   const changeTitle = (uuid, nextTitle) => {
-    const index = todos.findIndex(todo => todo.uuid === uuid);
-    const newTodos = [...todos];
-    newTodos[index].name = nextTitle;
-    setTodos(newTodos)
+    // const index = todos.findIndex(todo => todo.uuid === uuid);
+    // const newTodos = [...todos];
+    // newTodos[index].name = nextTitle;
+    // newTodos()
+    axios.patch(`${baseURL}/task/1/${uuid}`, {
+      name:nextTitle
+    }).then((response) => updateTodos())
   }
   const deleteTask = (uuid) => {
     axios.delete(`${baseURL}/task/1/${uuid}`).then((response) => updateTodos())
-    setTodos(prev => prev.filter(todos => todos.uuid !== uuid))
+    // setTodos(prev => prev.filter(todos => todos.uuid !== uuid))
+  }
+  const editTask = (uuid) => {
+    axios.patch(`${baseURL}/task/1/${uuid}`, {
+      name:newTitle
+    }).then((response) => updateTodos())
+    // setTodos(prev => prev.filter(todos => todos.uuid !== uuid))
   }
   const sortbydate = (up) => {
-setbyTime(up)
+    setbyTime(up)
   }
 
-  const countPages = Math.ceil(count / 5);
 
-  const paginationButtons = []
-  for (let i = 0; i < countPages; i++) {
-    paginationButtons.push(<button onClick={() => setPage(i)} className="pagination-button">{i + 1}</button>)
-  }
 
-  const pagination = count > 5 ? (<div className="pagination-wrapper">
-    <button className="pagination-button" onClick={() => setPage(0)}> {"<<"}</button>
-    {paginationButtons}
-    <button className="pagination-button" onClick={() => setPage(countPages - 1)}>{">>"}</button>
-  </div>) : <></>
 
   return (
     <div>
@@ -176,7 +175,8 @@ setbyTime(up)
 
 
 
-      {pagination}
+      <Pagination count={count} setPage={setPage}/>
+
 
     </div>
   );
