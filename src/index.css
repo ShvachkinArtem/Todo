@@ -110,33 +110,37 @@ button {
 
 .arrows {
   display: flex;
-  
 }
 
 .trumbleA {
-
-  animation: 1.2s ease-in-out 0s normal none infinite running trambling-animation;
+  animation: 1.2s ease-in-out 0s normal none infinite running
+    trambling-animation;
 }
 @keyframes trambling-animation {
-  0%, 50%, 100% {
-      transform: rotate(0deg);
+  0%,
+  50%,
+  100% {
+    transform: rotate(0deg);
   }
-  10%, 30% {
-      transform: rotate(-10deg);
+  10%,
+  30% {
+    transform: rotate(-10deg);
   }
-  20%, 40% {
-      transform: rotate(10deg);
+  20%,
+  40% {
+    transform: rotate(10deg);
   }
 }
 .filter-button:hover {
   background-color: #ccffff;
-}.pagination-button:hover {
+}
+.pagination-button:hover {
   background-color: #ccffff;
 }
 .animate__shakeX {
   display: inline-block;
   margin: 0 0.5rem;
 
-  animation: bounce; 
-  animation-duration: 2s; 
+  animation: bounce;
+  animation-duration: 2s;
 }

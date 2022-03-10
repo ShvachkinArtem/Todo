@@ -1,7 +1,7 @@
 import { useState } from "react"
 
 
- const TodoItem = ({ onChange, todos, deleteTask, setTodos }) => {
+const TodoItem = ({ onChange, todos, deleteTask, setTodos }) => {
 
     const [editTask, setTask] = useState(todos.name);
     const [editStatus, setStatus] = useState(false);

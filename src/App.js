@@ -14,13 +14,13 @@ const App = () => {
   const [newPage, setPage] = useState(1)
   const [filter, setnewFilter] = useState('ALL');
   const [time, setbyTime] = useState('asc')
-  
+
 
   const updateTodos = () => {
     axios.get(`${baseURL}/tasks/1`, {
       params: {
         order: time,
-        page:newPage
+        page: newPage
       }
     }).then((response) => {
       console.log(response)
@@ -35,17 +35,17 @@ const App = () => {
 
   useEffect(() => {
     updateTodos();
-  }, [time,newPage]);
+  }, [time, newPage]);
 
   useEffect(() => {
-    
+
     setFilter(todos)
     const sliceTodos = ([...todos].slice(5 * newPage, 5 * newPage + 5))
 
-    
+
 
   }, [filter, todos, newPage, time])
-  
+
   const [newId, setId] = useState(0)
   const toggleTodo = (uuid, newStatus) => {
     setTodos(prev => prev.map(el => {
@@ -85,22 +85,22 @@ const App = () => {
     }
 
   }
-  
+
   const changeTitle = (uuid, nextTitle) => {
-    
+
     axios.patch(`${baseURL}/task/1/${uuid}`, {
-      name:nextTitle
+      name: nextTitle
     }).then((response) => updateTodos())
   }
   const deleteTask = (uuid) => {
     axios.delete(`${baseURL}/task/1/${uuid}`).then((response) => updateTodos())
-    
+
   }
   const editTask = (uuid) => {
     axios.patch(`${baseURL}/task/1/${uuid}`, {
-      name:newTitle
+      name: newTitle
     }).then((response) => updateTodos())
-    
+
   }
   const sortbydate = (up) => {
     setbyTime(up)
@@ -154,7 +154,7 @@ const App = () => {
 
 
 
-      <Pagination count={count} setPage={setPage}/>
+      <Pagination count={count} setPage={setPage} />
 
 
     </div>
