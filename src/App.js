@@ -44,17 +44,7 @@ const App = () => {
   }, [filter, todos, newPage, time]);
 
   const toggleTodo = (uuid, newStatus) => {
-/*     setTodos((prev) =>
-      [...prev].map((el) => {
-        if (el.uuid === uuid) {
-          return {
-            ...el,
-            done: newStatus,
-          };
-        }
-        return el;
-      })
-    ); */
+
     axios
     .patch(`${baseURL}/task/1/${uuid}`, {
       done: newStatus,
