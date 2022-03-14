@@ -1,17 +1,23 @@
 import TodoItem from "./todoItem";
-const ToDoList = ({ todos, onToggle, deleteTask, changeTitle }) => (
+const ToDoList = ({ todos, onToggle, deleteTask, changeTitle }) => {
+  
+  console.log(todos[0])
+  
+  
+  return(
+
   <div className="tasks">
-    {todos.map((todos, index) => (
+    {todos.map((todo) => (
       <TodoItem
-        key={index}
-        todos={todos}
-        index={index}
+        
+        todo={todo}
+        
         onChange={onToggle}
         deleteTask={deleteTask}
         setTodos={changeTitle}
       ></TodoItem>
     ))}
   </div>
-);
+)};
 
 export default ToDoList;

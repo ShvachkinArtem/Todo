@@ -66,9 +66,6 @@ const App = () => {
       if (newTitle.trim().length === 0) { return };
 
       axios.post(`${baseURL}/task/1`, { done: false, name: newTitle }).then((response) => {
-
-
-
         updateTodos()
       }).catch(function (error) {
         if (error.response) {
