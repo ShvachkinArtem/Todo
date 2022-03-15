@@ -1,15 +1,10 @@
-body {
-  margin: auto;
-  width: 800px;
-  font-family: "Smooch Sans", sans-serif;
-  font-size: 30px;
-  font-weight: 600;
-}
 
-* {
-  font-family: "Smooch Sans", sans-serif;
-}
 
+*{
+  font-family: "Smooch Sans", sans-serif;
+  
+}
+/* 
 button {
   cursor: pointer;
 }
@@ -90,6 +85,7 @@ button {
   font-weight: 600;
   font-size: 30px;
 }
+*/
 
 .delete-todo {
   border: none;
@@ -102,7 +98,7 @@ button {
   fill: red;
   transition: 0.5s;
 }
-
+/*
 .todoTasks {
   display: flex;
   justify-content: space-between;
@@ -127,9 +123,9 @@ button {
   20%, 40% {
       transform: rotate(10deg);
   }
-}
-.filter-button:hover {
+} */
+/* .filter-button:hover {
   background-color: #ccffff;
 }.pagination-button:hover {
   background-color: #ccffff;
-}
+} */ 
