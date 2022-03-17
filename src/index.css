@@ -1,8 +1,5 @@
-
-
-*{
+* {
   font-family: "Smooch Sans", sans-serif;
-  
 }
 .App {
   max-width: 1000px;
@@ -132,17 +129,19 @@ button {
   background-color: #ccffff;
 }.pagination-button:hover {
   background-color: #ccffff;
-} */ 
-.LeftPart{
+} */
+.LeftPart {
   max-width: 90px;
   font-weight: 600;
-  font-size:30px;
+  font-size: 30px;
   display: flex;
- margin-top: 10px;
-} .RightPart {
+  margin-top: 10px;
+}
+.RightPart {
   font-weight: 600;
-  display:flex;
+  display: flex;
   font-size: 25px;
+  margin-top: 10px;
 }
 .StatusButtons {
   font-size: 30px;

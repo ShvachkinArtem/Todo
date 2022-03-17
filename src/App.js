@@ -1,43 +1,24 @@
 import ToDoList from "./tasks";
 import { useEffect, useState } from "react";
-import { Button, Col, Row, Typography, Input, Space, Pagination } from "antd";
+import { Col, Row, Typography,  Pagination } from "antd";
 import "antd/dist/antd.css";
 import "./index.css";
+import TitleSet from "./title";
+import SortButtons from "./sortbuttons";
 
-import { CaretUpOutlined , CaretDownOutlined} from "@ant-design/icons";
 
 const App = () => {
   const [todos, setTodos] = useState([]);
   const [count, setCount] = useState([]);
   const [filterSort, setFilter] = useState([]);
-  const [newTitle, setTitle] = useState("");
-  const [newPage, setPage] = useState(0);
   const [filter, setnewFilter] = useState("ALL");
-
-
-
-  const addTodo = () => {
-    setTodos((prev) => [
-      ...prev,
-      {
-        id: newId,
-        status: false,
-        title: newTitle,
-        createdAt: new Date().getTime(),
-      },
-    ]);
-  };
+  const [newPage, setPage] = useState(0);
+  
 
   useEffect(() => {
     setCount(todos.length);
 
     const sliceTodos = [...todos].slice(5 * newPage, 5 * newPage + 5);
-
-    if (newPage > 0 && sliceTodos.length === 0) {
-      setPage((prev) => prev - 1);
-      return;
-    }
-
     if (filter === "ALL") {
       setFilter([...sliceTodos]);
       return;
@@ -52,9 +33,14 @@ const App = () => {
       setFilter([...sliceTodos].filter((todos) => todos.status === false));
       return;
     }
+    if (newPage > 0 && sliceTodos.length === 0) {
+      setPage((prev) => prev - 1);
+      return;
+    }
+
+    
   }, [filter, todos, newPage]);
 
-  const [newId, setId] = useState(0);
   const toggleTodo = (id, newStatus) => {
     setTodos((prev) =>
       prev.map((el) => {
@@ -68,22 +54,10 @@ const App = () => {
       })
     );
   };
-  const handleChange = ({ target }) => {
-    setTitle(target.value);
-  };
-  const handleButton = ({ key }) => {
-    if (key === "Enter") {
-      if (newTitle.trim().length === 0) {
-        return;
-      }
-      addTodo();
-      setTitle("");
-      setId(newId + 1);
-    }
-  };
-  const statusCheck = (status) => {
+
+  /*   const statusCheck = (status) => {
     setFilter([...todos].filter((todos) => todos.status === status));
-  };
+  }; */
   const changeTitle = (id, nextTitle) => {
     const index = todos.findIndex((todo) => todo.id === id);
     const newTodos = [...todos];
@@ -93,21 +67,14 @@ const App = () => {
   const deleteTask = (id) => {
     setTodos((prev) => prev.filter((todos) => todos.id !== id));
   };
-  const sortbydate = (up) => {
-    if (up) {
-      setTodos(
-        [...todos].sort(function (a, b) {
-          return a.createdAt - b.createdAt;
-        })
-      );
-      return;
-    }
-    setTodos(
-      [...todos].sort(function (a, b) {
-        return b.createdAt - a.createdAt;
-      })
-    );
-  };
+  
+const pag = count>5 ? <Pagination
+className="Pagination"
+pageSize={5}
+total={count}
+value={newPage}
+onChange={(page) => setPage(page - 1)}
+/> : <></>
 
   return (
     <div className="App">
@@ -122,104 +89,25 @@ const App = () => {
           </Typography.Title>
         </Col>
       </Row>
-
       <div className="dowhat">
-        <Row justify="center">
-          <Col span={8}>
-            <Input
-              style={{ fontSize: "25px", fontWeight: 800, margin: 0 }}
-              size="large"
-              placeholder="I want to do..."
-              value={newTitle}
-              onChange={handleChange}
-              onKeyDown={handleButton}
-              className="wanttodo"
-              type="text"
-            />
-          </Col>
-        </Row>
+        <TitleSet setTodos={setTodos}></TitleSet>
       </div>
-      <div className="options">
-        <Row justify="space-around" style={{ marginTop: "50px" }}>
-          <div className="buttons">
-            <Row className="StatusButtons">
-              <Col>
-                <Button
-                  size="large"
-                  style={{ fontSize: "20px", fontWeight: 800 }}
-                  type="default"
-                  onClick={() => setnewFilter("ALL")}
-                  className="filter-button"
-                >
-                  All
-                </Button>
-              </Col>
-              <Col>
-                <Button
-                  size="large"
-                  style={{ fontSize: "20px", fontWeight: 800 }}
-                  type="default"
-                  onClick={() => setnewFilter("DONE")}
-                  className="filter-button"
-                >
-                  Done{" "}
-                </Button>
-              </Col>
-              <Col>
-                <Button
-                  size="large"
-                  style={{ fontSize: "20px", fontWeight: 800 }}
-                  type="default"
-                  onClick={() => setnewFilter("UNDONE")}
-                  className="filter-button"
-                >
-                  Undone{" "}
-                </Button>
-              </Col>
-            </Row>
-          </div>
-          <div className="sortbydate">
-            <Row>
-              <Space>
-                <Typography.Title level={1} style={{ margin: 0 }}>
-                  Sort by date
-                </Typography.Title>
-
-                <div className="arrows">
-                  <Button type="default">
-                    <div onClick={() => sortbydate(true)} className="arrowup">
-                    <CaretUpOutlined style={{fontSize:'20px'}}/>
-                    </div>
-                  </Button>
-                  <Button type="default">
-                    <div
-                      onClick={() => sortbydate(false)}
-                      className="arrowdown"
-                    >
-                      <CaretDownOutlined style={{fontSize:'20px'}} />
-                    </div>
-                  </Button>
-                </div>
-              </Space>
-            </Row>
-          </div>
-        </Row>
+      <div>
+      <SortButtons todos={todos} setTodos={setTodos} setFilter={setnewFilter}></SortButtons>
       </div>
-
       <ToDoList
         todos={filterSort}
         onToggle={toggleTodo}
         deleteTask={deleteTask}
         changeTitle={changeTitle}
-        setFilter={setnewFilter}
+        
       ></ToDoList>
 
-      <Pagination className="Pagination"
-        pageSize={5}
-        total={count}
-        value={newPage}
-        onChange={(page) => setPage(page-1)}
-      />
+
+<Row justify="center">
+{pag}
+</Row>
+      
     </div>
   );
 };
