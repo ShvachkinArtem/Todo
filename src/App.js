@@ -1,8 +1,11 @@
 import ToDoList from "./tasks";
 import { useEffect, useState } from "react";
-import { Button, Col, Row, Typography, Input, Space , Pagination } from "antd";
+import { Button, Col, Row, Typography, Input, Space, Pagination } from "antd";
 import "antd/dist/antd.css";
 import "./index.css";
+
+import { CaretUpOutlined , CaretDownOutlined} from "@ant-design/icons";
+
 const App = () => {
   const [todos, setTodos] = useState([]);
   const [count, setCount] = useState([]);
@@ -10,6 +13,8 @@ const App = () => {
   const [newTitle, setTitle] = useState("");
   const [newPage, setPage] = useState(0);
   const [filter, setnewFilter] = useState("ALL");
+
+
 
   const addTodo = () => {
     setTodos((prev) => [
@@ -105,9 +110,9 @@ const App = () => {
   };
 
   return (
-    <div>
+    <div className="App">
       <Row justify="center">
-        <Col span={2}>
+        <Col span={3}>
           {" "}
           <Typography.Title
             level={1}
@@ -135,81 +140,70 @@ const App = () => {
         </Row>
       </div>
       <div className="options">
-        
-        <Row justify="space-around" style={{marginTop:'50px'}}>
+        <Row justify="space-around" style={{ marginTop: "50px" }}>
           <div className="buttons">
-            <Row>
+            <Row className="StatusButtons">
               <Col>
-            <Button size="large" style={{ fontSize: "20px", fontWeight: 800 }}
-              type="default"
-              onClick={() => setnewFilter("ALL")}
-              className="filter-button"
-            >
-              All
-            </Button>
-            </Col>
-            <Col>
-            <Button size="large" style={{ fontSize: "20px", fontWeight: 800}}
-              type="default"
-              onClick={() => setnewFilter("DONE")}
-              className="filter-button"
-            >
-              Done{" "}
-            </Button>
-            </Col>
-            <Col>
-            <Button size="large" style={{  fontSize: "20px", fontWeight: 800 }}
-              type="default"
-              onClick={() => setnewFilter("UNDONE")}
-              className="filter-button"
-            >
-              Undone{" "}
-            </Button>
-            </Col>
+                <Button
+                  size="large"
+                  style={{ fontSize: "20px", fontWeight: 800 }}
+                  type="default"
+                  onClick={() => setnewFilter("ALL")}
+                  className="filter-button"
+                >
+                  All
+                </Button>
+              </Col>
+              <Col>
+                <Button
+                  size="large"
+                  style={{ fontSize: "20px", fontWeight: 800 }}
+                  type="default"
+                  onClick={() => setnewFilter("DONE")}
+                  className="filter-button"
+                >
+                  Done{" "}
+                </Button>
+              </Col>
+              <Col>
+                <Button
+                  size="large"
+                  style={{ fontSize: "20px", fontWeight: 800 }}
+                  type="default"
+                  onClick={() => setnewFilter("UNDONE")}
+                  className="filter-button"
+                >
+                  Undone{" "}
+                </Button>
+              </Col>
             </Row>
           </div>
           <div className="sortbydate">
-          
             <Row>
-            <Space>
-            <Typography.Title level={1} style={{ margin: 0 }}>
-              Sort by date
-            </Typography.Title>
-          
+              <Space>
+                <Typography.Title level={1} style={{ margin: 0 }}>
+                  Sort by date
+                </Typography.Title>
 
-            <div className="arrows">
-              <Button type="default">
-                <div onClick={() => sortbydate(true)} className="arrowup">
-                  <svg
-                    width="20px"
-                    height="20px"
-                    viewBox="0 0 1024 1024"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path d="M8.2 751.4c0 8.6 3.4 17.401 10 24.001 13.2 13.2 34.8 13.2 48 0l451.8-451.8 445.2 445.2c13.2 13.2 34.8 13.2 48 0s13.2-34.8 0-48L542 251.401c-13.2-13.2-34.8-13.2-48 0l-475.8 475.8c-6.8 6.8-10 15.4-10 24.2z" />
-                  </svg>
+                <div className="arrows">
+                  <Button type="default">
+                    <div onClick={() => sortbydate(true)} className="arrowup">
+                    <CaretUpOutlined style={{fontSize:'20px'}}/>
+                    </div>
+                  </Button>
+                  <Button type="default">
+                    <div
+                      onClick={() => sortbydate(false)}
+                      className="arrowdown"
+                    >
+                      <CaretDownOutlined style={{fontSize:'20px'}} />
+                    </div>
+                  </Button>
                 </div>
-              </Button>
-              <Button type="default">
-                <div onClick={() => sortbydate(false)} className="arrowdown">
-                  <svg
-                    width="20px"
-                    height="20px"
-                    viewBox="0 0 1024 1024"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path d="M8.2 751.4c0 8.6 3.4 17.401 10 24.001 13.2 13.2 34.8 13.2 48 0l451.8-451.8 445.2 445.2c13.2 13.2 34.8 13.2 48 0s13.2-34.8 0-48L542 251.401c-13.2-13.2-34.8-13.2-48 0l-475.8 475.8c-6.8 6.8-10 15.4-10 24.2z" />
-                  </svg>
-                </div>
-              </Button>
-            </div>
-            </Space>
-
+              </Space>
             </Row>
           </div>
-          
         </Row>
-        
       </div>
 
       <ToDoList
@@ -220,11 +214,12 @@ const App = () => {
         setFilter={setnewFilter}
       ></ToDoList>
 
-<Pagination>
+      <Pagination className="Pagination"
+        pageSize={5}
         total={count}
-    defaultCurrent={1}
-    onChange={(page)=>setPage(page)}
-    </Pagination>
+        value={newPage}
+        onChange={(page) => setPage(page-1)}
+      />
     </div>
   );
 };
