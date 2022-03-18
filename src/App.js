@@ -1,11 +1,10 @@
 import ToDoList from "./tasks";
 import { useEffect, useState } from "react";
-import { Col, Row, Typography,  Pagination } from "antd";
+import { Col, Row, Typography, Pagination } from "antd";
 import "antd/dist/antd.css";
 import "./index.css";
 import TitleSet from "./title";
 import SortButtons from "./sortbuttons";
-
 
 const App = () => {
   const [todos, setTodos] = useState([]);
@@ -13,8 +12,7 @@ const App = () => {
   const [filterSort, setFilter] = useState([]);
   const [filter, setnewFilter] = useState("ALL");
   const [newPage, setPage] = useState(0);
-  
-
+  console.log(newPage,count);
   useEffect(() => {
     setCount(todos.length);
 
@@ -37,8 +35,6 @@ const App = () => {
       setPage((prev) => prev - 1);
       return;
     }
-
-    
   }, [filter, todos, newPage]);
 
   const toggleTodo = (id, newStatus) => {
@@ -55,9 +51,6 @@ const App = () => {
     );
   };
 
-  /*   const statusCheck = (status) => {
-    setFilter([...todos].filter((todos) => todos.status === status));
-  }; */
   const changeTitle = (id, nextTitle) => {
     const index = todos.findIndex((todo) => todo.id === id);
     const newTodos = [...todos];
@@ -67,14 +60,19 @@ const App = () => {
   const deleteTask = (id) => {
     setTodos((prev) => prev.filter((todos) => todos.id !== id));
   };
-  
-const pag = count>5 ? <Pagination
-className="Pagination"
-pageSize={5}
-total={count}
-value={newPage}
-onChange={(page) => setPage(page - 1)}
-/> : <></>
+
+  const pag =
+    count > 5 ? (
+      <Pagination
+        className="Pagination"
+        pageSize={5}
+        total={count}
+        value={newPage}
+        onChange={(page) => setPage(page - 1)}
+      />
+    ) : (
+      <></>
+    );
 
   return (
     <div className="App">
@@ -93,21 +91,20 @@ onChange={(page) => setPage(page - 1)}
         <TitleSet setTodos={setTodos}></TitleSet>
       </div>
       <div>
-      <SortButtons todos={todos} setTodos={setTodos} setFilter={setnewFilter}></SortButtons>
+        <SortButtons
+          todos={todos}
+          setTodos={setTodos}
+          setFilter={setnewFilter}
+        ></SortButtons>
       </div>
       <ToDoList
         todos={filterSort}
         onToggle={toggleTodo}
         deleteTask={deleteTask}
         changeTitle={changeTitle}
-        
       ></ToDoList>
 
-
-<Row justify="center">
-{pag}
-</Row>
-      
+      <Row justify="center">{pag}</Row>
     </div>
   );
 };

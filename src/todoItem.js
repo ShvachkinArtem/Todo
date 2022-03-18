@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Row, Col, Card } from "antd";
+import { Row, Col, Card , Space } from "antd";
 import Checkbox from "antd/lib/checkbox/Checkbox";
 
 const TodoItem = ({ onChange, todo, deleteTask, setTodos }) => {
@@ -32,6 +32,7 @@ const TodoItem = ({ onChange, todo, deleteTask, setTodos }) => {
         <Row justify="space-around">
           <Col span={8}>
             <Row className="LeftPart" justify="space-between">
+              <Space style={{alignItems:'baseline'}}>
               <Col>
                 {" "}
                 <Checkbox
@@ -41,6 +42,7 @@ const TodoItem = ({ onChange, todo, deleteTask, setTodos }) => {
                 />
               </Col>
               <Col>{taskelement}</Col>
+              </Space>
             </Row>
           </Col>
           <Col span={8}>

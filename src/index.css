@@ -109,7 +109,7 @@ button {
   display: flex;
   
 }
-
+*/
 .trumbleA {
 
   animation: 1.2s ease-in-out 0s normal none infinite running trambling-animation;
@@ -124,18 +124,20 @@ button {
   20%, 40% {
       transform: rotate(10deg);
   }
-} */
+} 
 /* .filter-button:hover {
   background-color: #ccffff;
 }.pagination-button:hover {
   background-color: #ccffff;
 } */
 .LeftPart {
-  max-width: 90px;
+  max-width: fit-content;
   font-weight: 600;
   font-size: 30px;
   display: flex;
   margin-top: 10px;
+
+
 }
 .RightPart {
   font-weight: 600;
@@ -147,5 +149,5 @@ button {
   font-size: 30px;
 }
 .Pagination {
-  font-weight: 900;
+  font-weight: 900
 }
