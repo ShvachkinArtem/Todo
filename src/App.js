@@ -12,7 +12,7 @@ const App = () => {
   const [filterSort, setFilter] = useState([]);
   const [filter, setnewFilter] = useState("ALL");
   const [newPage, setPage] = useState(0);
-  console.log(newPage,count);
+  console.log(newPage, count, todos.length);
   useEffect(() => {
     setCount(todos.length);
 
@@ -50,7 +50,7 @@ const App = () => {
       })
     );
   };
-
+ 
   const changeTitle = (id, nextTitle) => {
     const index = todos.findIndex((todo) => todo.id === id);
     const newTodos = [...todos];

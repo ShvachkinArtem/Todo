@@ -15,10 +15,11 @@ const TodoItem = ({ onChange, todo, deleteTask, setTodos }) => {
     }
   };
   const taskelement = editStatus ? (
-    <input
+    <input autoFocus
       maxLength={33}
       className={editTask.length === 0 ? "trumbleA" : ""}
       value={editTask}
+      onBlur={()=>setStatus(false)}
       onChange={(e) => setTask(e.target.value)}
       onKeyDown={handleTask}
     ></input>

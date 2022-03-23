@@ -111,33 +111,30 @@ button {
 }
 */
 .trumbleA {
-
-  animation: 1.2s ease-in-out 0s normal none infinite running trambling-animation;
+  animation: 1.2s ease-in-out 0s normal none infinite running
+    trambling-animation;
 }
 @keyframes trambling-animation {
-  0%, 50%, 100% {
-      transform: rotate(0deg);
+  0%,
+  50%,
+  100% {
+    transform: rotate(0deg);
   }
-  10%, 30% {
-      transform: rotate(-10deg);
+  10%,
+  30% {
+    transform: rotate(-10deg);
   }
-  20%, 40% {
-      transform: rotate(10deg);
+  20%,
+  40% {
+    transform: rotate(10deg);
   }
-} 
-/* .filter-button:hover {
-  background-color: #ccffff;
-}.pagination-button:hover {
-  background-color: #ccffff;
-} */
+}
 .LeftPart {
   max-width: fit-content;
   font-weight: 600;
   font-size: 30px;
   display: flex;
   margin-top: 10px;
-
-
 }
 .RightPart {
   font-weight: 600;
@@ -149,5 +146,5 @@ button {
   font-size: 30px;
 }
 .Pagination {
-  font-weight: 900
+  font-weight: 900;
 }
